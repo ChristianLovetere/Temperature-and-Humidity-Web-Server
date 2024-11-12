@@ -42,10 +42,12 @@ void loop() {
   dtostrf(hum, 4, 1, humString);
   dtostrf(temp, 4, 1, tempString);
 
-  char dataPacket[13];
-  strcpy(dataPacket, humString);
+  char dataPacket[15];
+  strcpy(dataPacket, "$");
+  strcat(dataPacket, humString);
   strcat(dataPacket, "%");
   strcat(dataPacket, tempString);
+  strcat(dataPacket, "^");
 
   char buffer[35];
 
