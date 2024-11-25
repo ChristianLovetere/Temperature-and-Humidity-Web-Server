@@ -1,5 +1,6 @@
 #include <Wire.h>
 #define SENSOR_ADDR 0x38
+#define LORA_NRST_PIN 7
 
 int lastReq = 0; //hold time since last request
 int status = 0; //hold the status
@@ -77,9 +78,9 @@ void loop() {
   Serial.flush();
 
   //Reset the module (if needed)
-  digitalWrite(8, LOW);
+  digitalWrite(LORA_NRST_PIN, LOW);
   delay(100);
-  digitalWrite(8, HIGH);
+  digitalWrite(LORA_NRST_PIN, HIGH);
 }
 
 float getHumidity(){
@@ -135,7 +136,10 @@ int convert(){ //turn the 6 bytes of hum and temp info into readable information
   output <<= 8;
   output += bits[5];
   temperature = output / 1048576.0 * 200 - 50;
+  
+  return 0;
 }
+
 int requestData(){ //ask the sensor to take a measurement
   resetSensor();
 
